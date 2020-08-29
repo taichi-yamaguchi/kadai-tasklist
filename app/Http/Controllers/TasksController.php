@@ -32,7 +32,7 @@ class TasksController extends Controller
      */
     public function create()
     {
-        $message = new Message;
+        $task = new Task;
 
         // タスク作成ビューを表示
         return view('tasks.create', [
@@ -65,7 +65,11 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        //
+        $task = Task::findOrFail($id);
+        
+        return view('tasks.show',[
+            'task' => $task,
+        ]);
     }
 
     /**
@@ -80,7 +84,7 @@ class TasksController extends Controller
         $task= Task::findOrFail($id);
 
         // タスク詳細ビューでそれを表示
-        return view('tasks.show', [
+        return view('tasks.edit', [
             'task' => $task,
         ]);
     }
