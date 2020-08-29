@@ -15,7 +15,14 @@ class TasksController extends Controller
      */
     public function index()
     {
-        //
+        //タスク一覧を取得
+        $tasks = Task::all();
+        
+        // タスク一覧ビューでそれを表示
+        return view('tasks.index', [
+            'tasks' => $tasks,
+        ]);
+
     }
 
     /**
@@ -25,7 +32,12 @@ class TasksController extends Controller
      */
     public function create()
     {
-        //
+        $message = new Message;
+
+        // タスク作成ビューを表示
+        return view('tasks.create', [
+            'task' => $task,
+        ]);
     }
 
     /**
@@ -36,7 +48,13 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // タスクを作成
+        $task = new Task;
+        $task->content = $request->content;
+        $task->save();
+
+        // トップページへリダイレクトさせる
+        return redirect('/');
     }
 
     /**
@@ -58,7 +76,13 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-        //
+         // idの値でタスクを検索して取得
+        $task= Task::findOrFail($id);
+
+        // タスク詳細ビューでそれを表示
+        return view('tasks.show', [
+            'task' => $task,
+        ]);
     }
 
     /**
@@ -70,7 +94,14 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // idの値でタスクを検索して取得
+        $task =Task::findOrFail($id);
+        // タスクを更新
+        $task->content = $request->content;
+        $task->save();
+
+        // トップページへリダイレクトさせる
+        return redirect('/');
     }
 
     /**
@@ -81,6 +112,12 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
-        //
+          // idの値でタスクを検索して取得
+        $task = Task::findOrFail($id);
+        // メッセージを削除
+        $task->delete();
+
+        // トップページへリダイレクトさせる
+        return redirect('/');
     }
 }
