@@ -159,6 +159,7 @@ class TasksController extends Controller
             return redirect('/');
         }
         
+        
         // メッセージを削除
         $task->delete();
 
